@@ -9,7 +9,7 @@ const cors = require('cors')
 
 
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 const app = express();
 // set the view engine to ejs
 app.set('view engine', 'ejs');
