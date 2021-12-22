@@ -2,5 +2,9 @@
 
 module.exports = {
   client: 'pg',
-  connection: process.env.DATABASE_URL || {user:'hiruy',database:'demo',password:'2012'}
+    connection: process.env.DATABASE_URL,
+  migrations: {
+      directory: './migrations',
+      tableName: 'knex_migrations'
+    }
 };
