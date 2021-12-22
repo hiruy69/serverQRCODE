@@ -1,7 +1,13 @@
 //const knex = require('./knex')
 const knexConfig = require('../knexfile')
-const knex = require('knex')(knexConfig[process.env.NODE_ENV || 'production' ])
-//const knex = require('knex')
+//const knex = require('knex')(knexConfig[process.env.NODE_ENV || 'production' ])
+const knex = require('knex')({
+  client: 'pg',
+  connection: process.env.DATABASE_URL,
+  migrations: {
+    tableName: 'knex_migrations'
+  }
+})
 
 //console.log('nnnn db.sqlite3')
 function createUser(user){
