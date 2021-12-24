@@ -208,13 +208,13 @@ app.post('/changepassword', verifyToken, async (req, res) =>{
 
 app.get('/tickets', async (req, res) =>{
   const result = await db.getTickets()
-  res.status(200).json({users : result})
+  res.status(200).json({tickets : result})
 }) 
 
 
 app.get('/ticket',verifyToken, async (req, res) =>{
   const result = await db.getTicket(req.body)
-  res.status(200).json({user : result})
+  res.status(200).json({ticket : result})
 })
 
 
@@ -222,7 +222,7 @@ app.post('/createticket',verifyToken, async (req, res) =>{
   
   const result = await db.createTicket(req.body)
   if (result ){
-      res.status(200).json({ qr : result })
+      res.status(200).json({ ticket : result })
   }
   else{
       res.status(403)
@@ -233,7 +233,7 @@ app.post('/updateticket',verifyToken, async (req, res) =>{
   const {id , ...data} = req.body
   const result = await db.updateTicket({id:id},data)
   if (result ){
-      res.status(200).json({ qr : result })
+      res.status(200).json({ ticket : result })
   }
   else{
       res.status(403)
@@ -245,7 +245,7 @@ app.get("/ticketspg",verifyToken, (req, res) => {
     db.getPaginated(id).then(re=> {
       const pg = re
        if (pg ){
-        res.status(200).json({ qr : pg })
+        res.status(200).json({ ticket : pg })
       }
       else{
           res.status(403)
