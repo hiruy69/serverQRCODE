@@ -1,5 +1,5 @@
 const { v4: uuidv4 } = require('uuid');
-exports.up = function(knex) {
+exports.up = async function(knex) {
   await knex.raw('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"');
   return knex.schema
   .createTable('tickets', function (table) {
