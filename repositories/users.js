@@ -44,6 +44,48 @@ function deleteItem(item){
     return knex("items").where(item).del();
 }
 
+function createTicket(item){
+    return knex("tickets").insert(item);
+}
+
+function getTickets(){
+    return knex("tickets").select("*");
+}
+
+function getTicket(item){
+    return knex("tickets").where(item);
+}
+
+function updateTicket(item,data){
+    return knex("tickets").where(item).update(data);
+}
+
+function getPaginated(current_page){
+    var pagination = {};
+    var per_page = 20;
+    var page = current_page || 1;
+    if (page < 1) page = 1;
+    var offset = (page - 1) * per_page;
+    return Promise.all([
+        knex("tickets").count('* as count').first(),
+        knex("tickets").select("*").offset(offset).limit(per_page)
+    ]).then(([total, rows]) => {
+        var count = total.count;
+        var rows = rows;
+        pagination.total = count;
+        pagination.per_page = per_page;
+        pagination.offset = offset;
+        pagination.to = offset + rows.length;
+        pagination.last_page = Math.ceil(count / per_page);
+        pagination.current_page = page;
+        pagination.from = offset;
+        pagination.data = rows;
+        //console.log(offset,page,pagination,per_page,total,rows)
+        return pagination
+    }).catch(err=>console.log(err));
+    
+}
+
 
 module.exports = {
     createUser,
@@ -55,5 +97,10 @@ module.exports = {
     getItems,
     getItem,
     updateItem,
-    deleteItem
+    deleteItem,
+    updateTicket,
+    getTicket,
+    getTickets,
+    createTicket,
+    getPaginated
 }
