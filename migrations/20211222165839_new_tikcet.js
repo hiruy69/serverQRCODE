@@ -3,7 +3,7 @@ exports.up = async function(knex) {
   await knex.raw('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"');
   return knex.schema
   .createTable('tickets', function (table) {
-    table.uuid('brandId').unique().notNullable().primary().defaultTo(knex.raw('uuid_generate_v4()'));
+    table.uuid('id').unique().notNullable().primary().defaultTo(knex.raw('uuid_generate_v4()'));
     table.string('type', 255);
     table.string('ticket_owner', 255);
     table.string('address', 255);
