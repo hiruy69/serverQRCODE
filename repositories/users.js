@@ -68,7 +68,7 @@ function getPaginated(current_page){
     var offset = (page - 1) * per_page;
     return Promise.all([
         knex("tickets").count('* as count').first(),
-        knex("tickets").select("*").offset(offset).limit(per_page)
+        knex("tickets").select("*").orderBy('created_at', 'desc').offset(offset).limit(per_page)
     ]).then(([total, rows]) => {
         var count = total.count;
         var rows = rows;
