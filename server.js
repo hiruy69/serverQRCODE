@@ -212,7 +212,7 @@ app.get('/tickets', async (req, res) =>{
 }) 
 
 
-app.get('/ticket',verifyToken, async (req, res) =>{
+app.post('/ticket',verifyToken, async (req, res) =>{
   const result = await db.getTicket(req.body)
   res.status(200).json({ticket : result})
 })
@@ -240,7 +240,7 @@ app.post('/updateticket',verifyToken, async (req, res) =>{
   }
 }) 
 
-app.get("/ticketspg",verifyToken, (req, res) => {
+app.post("/ticketspg",verifyToken, (req, res) => {
     const {id} = req.body
     db.getPaginated(id).then(re=> {
       const pg = re
